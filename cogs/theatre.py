@@ -28,10 +28,10 @@ class Theatre(commands.Cog):
                 position=0
             )
             await channel.move(end=True)
-            await asyncio.sleep(2)
+            await asyncio.sleep(0.2)
 
         await inter.original_response()
-        await inter.response.edit_original_message(content="Theatres created.")
+        await inter.edit_original_message(content="Theatres created.")
 
 def setup(client):
     client.add_cog(Theatre(client))

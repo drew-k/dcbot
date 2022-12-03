@@ -1,7 +1,7 @@
 import disnake
 from disnake.ext import commands
 import os
-from format import Format
+from core.format import Format
 
 class Bot(commands.InteractionBot):
     def __init__(self):
@@ -9,7 +9,7 @@ class Bot(commands.InteractionBot):
             intents=disnake.Intents().default(),
         )
 
-    def init_cogs(self, folder: str = "extensions") -> None:
+    def init_cogs(self, folder: str = "cogs") -> None:
         """ Initialize cogs in provided folder """
         for file in os.listdir(folder):
             if file.endswith(".py"):
@@ -24,7 +24,10 @@ class Bot(commands.InteractionBot):
     async def on_ready(self):
         print(Format.green + Format.bold + f"{self.user}" + Format.reset + Format.green + " is ready." + Format.reset)
 
-if __name__ == "__main__":
+def main():
     bot = Bot()
     bot.init_cogs()
     bot.run(os.getenv("TOKEN"))
+
+if __name__ == "__main__":
+    main()
