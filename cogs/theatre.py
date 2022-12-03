@@ -1,7 +1,8 @@
 import disnake
 from disnake.ext import commands
 import asyncio
-from format import Format, toOrdinalNum
+from core.format import Format
+from core.ordinals import toOrdinalNum
 
 class Theatre(commands.Cog):
     def __init__(self, client):
@@ -26,9 +27,8 @@ class Theatre(commands.Cog):
                 name=f"Drew's {toOrdinalNum(i+1)} 𝕿𝖍éâ𝖙𝖗𝖊",
                 position=0
             )
-            await asyncio.sleep(0.01)
             await channel.move(end=True)
-            await asyncio.sleep(0.01)
+            await asyncio.sleep(2)
 
         await inter.original_response()
         await inter.response.edit_original_message(content="Theatres created.")
