@@ -16,7 +16,7 @@ class Theatre(commands.Cog):
         ):
         await inter.response.defer(with_message=True, ephemeral=True)
         category: disnake.CategoryChannel = None
-        for i in range(count):
+        for i in range(count if count <= 500 else 500):
             if i % 50 == 0:
                 category = await inter.guild.create_category(
                 name="Theatres",
