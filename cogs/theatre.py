@@ -15,23 +15,25 @@ class Theatre(commands.Cog):
         count: int,
         ):
         await inter.response.defer(with_message=True, ephemeral=True)
-        category: disnake.CategoryChannel = None
-        for i in range(count if count <= 500 else 500):
-            if i % 50 == 0:
-                category = await inter.guild.create_category(
-                name="Theatres",
-                position=len(inter.guild.channels) - 1,
-                reason="Maximum number of channels per category is 50. We need more!"
+        try:
+            category: disnake.CategoryChannel = None
+            for i in range(count if count <= 500 else 500):
+                if i % 50 == 0:
+                    category = await inter.guild.create_category(
+                    name="Theatres",
+                    position=500,
+                    reason="Maximum number of channels per category is 50. We need more!"
+                    )
+                channel = await category.create_voice_channel(
+                    name=f"Drew's {toOrdinalNum(i+1)} 𝕿𝖍éâ𝖙𝖗𝖊",
+                    position=500
                 )
-            channel = await category.create_voice_channel(
-                name=f"Drew's {toOrdinalNum(i+1)} 𝕿𝖍éâ𝖙𝖗𝖊",
-                position=0
-            )
-            await channel.move(end=True)
-            await asyncio.sleep(0.2)
-
-        await inter.original_response()
-        await inter.edit_original_message(content="Theatres created.")
+                await asyncio.sleep(0.2)
+            await inter.edit_original_message(content="Theatres created.")
+        except disnake.HTTPException:
+            await inter.edit_original_message(content="Could not create any more channels.")
+        except disnake.Forbidden:
+            await inter.edit_original_message(content="You do not have the proper permissions to create channels.")
 
 def setup(client):
     client.add_cog(Theatre(client))
