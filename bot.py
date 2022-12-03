@@ -1,23 +1,31 @@
 import disnake
 from disnake.ext import commands
-from dotenv import load_dotenv
 import os
 from format import Format
 
 
 class Bot(commands.InteractionBot):
     def __init__(self):
-        super().__init__()
+        super().__init__(
+            intents=disnake.Intents().default(),
+        )
+
+    def init_cogs(self, folder: str = "extensions") -> None:
+        """ Initialize cogs in provided folder """
+        for file in os.listdir(folder):
+            if file.endswith(".py"):
+                self.load_extension(f"{folder}.{file[:-3]}")
 
     async def on_connect(self):
-        print(Format.yellow + f"{self.user} has connected." + Format.reset)
+        print(Format.yellow + Format.bold + f"{self.user}" + Format.reset + Format.yellow + " has connected." + Format.reset)
 
     async def on_disconnect(self):
-        print(Format.red + f"{self.user} has disconnected." + Format.reset)
+        print(Format.red + Format.bold + f"{self.user}" + Format.reset + Format.red + " has disconnected." + Format.reset)
 
     async def on_ready(self):
-        print(Format.green + f"{self.user} is ready." + Format.reset)
+        print(Format.green + Format.bold + f"{self.user}" + Format.reset + Format.green + " is ready." + Format.reset)
 
 if __name__ == "__main__":
     bot = Bot()
+    bot.init_cogs()
     bot.run(os.getenv("TOKEN"))
