@@ -3,7 +3,6 @@ from disnake.ext import commands
 import os
 from format import Format
 
-
 class Bot(commands.InteractionBot):
     def __init__(self):
         super().__init__(
