@@ -35,6 +35,32 @@ class Theatre(commands.Cog):
         except disnake.Forbidden:
             await inter.edit_original_message(content="You do not have the proper permissions to create channels.")
 
+    @commands.slash_command(dm_permission=False)
+    async def destroy_theatre(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        ):
+        await inter.response.defer(with_message=True, ephemeral=True)
+        try:
+            logs = await inter.guild.audit_logs(action=disnake.AuditLogAction.channel_create, user=self.client.user, limit=None).flatten()
+            log_ids = []
+            for log in logs:
+                log_ids.append(log.target.id)
+            for channel in inter.guild.channels:
+                if channel.id in log_ids:
+                    await channel.delete(reason="Purging...")
+            await inter.edit_original_message(content="Channels deleted...")
+        except disnake.HTTPException as exception:
+            await inter.edit_original_message(content=exception.text)
+        except disnake.NotFound as exception:
+            await inter.edit_original_message(content=exception.text)
+        except disnake.Forbidden as exception:
+            await inter.edit_original_message(content=exception.text)
+        except disnake.InvalidData as exception:
+            await inter.edit_original_message(content=exception.text)
+
+
+
 def setup(client):
     client.add_cog(Theatre(client))
     print(Format.blue + Format.italics + f"> Loaded {__name__}" + Format.reset)

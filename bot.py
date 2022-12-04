@@ -2,6 +2,9 @@ import disnake
 from disnake.ext import commands
 import os
 from core.format import Format
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Bot(commands.InteractionBot):
     def __init__(self):
