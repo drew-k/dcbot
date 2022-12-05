@@ -1,6 +1,5 @@
 import disnake
 from disnake.ext import commands
-import asyncio
 from core.format import Format
 from core.ordinals import toOrdinalNum
 
