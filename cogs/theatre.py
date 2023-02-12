@@ -17,14 +17,9 @@ class Theatre(commands.Cog):
         try:
             category: disnake.CategoryChannel = None
             for i in range(count if count <= 500 else 500):
-                if i % 50 == 0:
-                    category = await inter.guild.create_category(
-                    name="Theatres",
-                    position=500,
-                    reason="Maximum number of channels per category is 50. We need more!"
-                    )
-                await category.create_voice_channel(
-                    name=f"Drew's {toOrdinalNum(i+1)} 𝕿𝖍éâ𝖙𝖗𝖊",
+
+                await inter.guild.create_voice_channel(
+                    name=f"Corey's {toOrdinalNum(i+1)} 𝕿𝖍éâ𝖙𝖗𝖊",
                     position=500,
                     reason="Demand calls for more Theatres!"
                 )
